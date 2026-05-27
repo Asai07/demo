@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventoclic | Portal de Demos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: { brand: '#e4573d', 'brand-dark': '#c23d26' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fdfaf8;
+            overflow-x: hidden;
+        }
+
+        /* Fondo difuminado moderno (mesh gradient suave) */
+        .bg-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                radial-gradient(at 10% 0%, rgba(228, 87, 61, 0.1) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, rgba(255, 180, 160, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(228, 87, 61, 0.05) 0px, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Utilidades para la transición de vistas */
+        .seccion {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .seccion.oculto {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            transform: scale(0.98) translateY(10px);
+            z-index: -1;
+            filter: blur(4px);
+        }
+
+        .seccion.activo {
+            opacity: 1;
+            pointer-events: auto;
+            position: relative;
+            transform: scale(1) translateY(0);
+            z-index: 10;
+            filter: blur(0);
+        }
+
+        /* Estilos minimalistas para el iframe */
+        .iframe-container {
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 30px 60px -12px rgba(0, 0, 0, 0.1), 0 18px 36px -18px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col relative selection:bg-brand selection:text-white">
+
+    <div class="bg-mesh"></div>
+
+    <header class="relative z-50 flex flex-col items-center pt-8 px-4 w-full">
+        <div
+            class="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between p-2 md:pr-4 bg-white/60 backdrop-blur-2xl border border-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+
+            <div class="pl-4 md:pl-6 mb-4 md:mb-0 w-32 flex justify-center md:justify-start">
+                <img src="https://eventoclic.com/wp-content/uploads/2023/10/logo-mievento-01.svg" alt="Eventoclic Logo"
+                    class="h-5 object-contain">
+            </div>
+
+            <div class="flex p-1 bg-slate-100/50 rounded-full shadow-inner relative">
+                <div id="btn-bg"
+                    class="absolute inset-y-1 left-1 w-[calc(50%-4px)] bg-brand shadow-md rounded-full transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) z-0">
+                </div>
+
+                <button onclick="cambiarVista('invitaciones')" id="btn-invitaciones"
+                    class="relative px-6 py-2.5 text-sm font-bold tracking-wide text-white transition-colors z-10 w-48 rounded-full outline-none">
+                    Vista del Invitado
+                </button>
+                <button onclick="cambiarVista('dashboards')" id="btn-dashboards"
+                    class="relative px-6 py-2.5 text-sm font-bold tracking-wide text-slate-500 hover:text-slate-800 transition-colors z-10 w-48 rounded-full outline-none">
+                    Centro de Control
+                </button>
+            </div>
+
+            <div class="w-32 hidden md:block"></div>
+        </div>
+
+        <div id="submenu-invitaciones"
+            class="mt-6 flex bg-white/60 backdrop-blur-xl border border-white p-1.5 rounded-full shadow-sm transition-all duration-300">
+            <button onclick="cambiarIframe('https://eventoclic.com/modelo-2-premium', this)"
+                class="submenu-btn px-6 py-2 text-[11px] font-bold uppercase tracking-widest text-brand bg-white rounded-full shadow-sm transition-all">Boda</button>
+            <button onclick="cambiarIframe('https://modelos-elite-xv.eventoclic.com/natalia/', this)"
+                class="submenu-btn px-6 py-2 text-[11px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 rounded-full transition-all">XV
+                Años</button>
+            <button onclick="cambiarIframe('https://modelos-bautizo.eventoclic.com/emma-sofia/', this)"
+                class="submenu-btn px-6 py-2 text-[11px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 rounded-full transition-all">Bautizo</button>
+            <button onclick="cambiarIframe('https://eventoclic.com/control-qr/', this)"
+                class="submenu-btn px-6 py-2 text-[11px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 rounded-full transition-all">Control
+                QR</button>
+        </div>
+    </header>
+
+    <main class="flex-1 relative z-10 w-full px-4 py-8 flex flex-col items-center">
+
+        <div id="vista-invitaciones" class="seccion activo w-full max-w-6xl mx-auto flex-1 flex flex-col">
+            <div class="w-full flex-1 min-h-[70vh] bg-white rounded-[2rem] iframe-container overflow-hidden relative">
+
+                <div id="iframe-loader" class="absolute inset-0 bg-slate-50 flex items-center justify-center z-0">
+                    <div class="w-8 h-8 border-2 border-slate-200 border-t-brand rounded-full animate-spin"></div>
+                </div>
+
+                <iframe id="iframe-invitacion" src="https://eventoclic.com/modelo-2-premium"
+                    class="absolute inset-0 w-full h-full border-none z-10 bg-transparent" title="Demo Invitación"
+                    onload="document.getElementById('iframe-loader').style.display='none'"></iframe>
+            </div>
+        </div>
+
+        <div id="vista-dashboards" class="seccion oculto w-full max-w-5xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+
+                <a href="./DemoPremium/index.html" target="_blank"
+                    class="group relative bg-white border border-slate-200/60 rounded-3xl p-8 flex flex-col hover:border-slate-300 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+
+                    <div class="relative z-10 flex-1">
+                        <div
+                            class="w-12 h-12 bg-white border border-slate-100 shadow-sm rounded-xl flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+                            <i class="ph-fill ph-star text-2xl text-slate-700"></i>
+                        </div>
+                        <h2 class="text-2xl font-black text-slate-900 mb-3 tracking-tight">Demo Premium</h2>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-8">
+                            El estándar para eventos sociales. Un panel enfocado en la gestión de confirmaciones,
+                            asignación de mesas visual y descarga de reportes estructurados en Excel.
+                        </p>
+                    </div>
+
+                    <div class="relative z-10 flex items-center justify-between pt-6 border-t border-slate-100">
+                        <span class="text-sm font-bold text-slate-900 group-hover:text-brand transition-colors">Abrir
+                            entorno de prueba</span>
+                        <div
+                            class="w-8 h-8 bg-slate-50 rounded-full flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all">
+                            <i class="ph-bold ph-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="./DemoVIP/index.html" target="_blank"
+                    class="group relative bg-slate-900 border border-slate-800 rounded-3xl p-8 flex flex-col hover:border-slate-700 hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute -top-20 -right-20 w-64 h-64 bg-yellow-500/10 blur-3xl rounded-full group-hover:bg-yellow-500/20 transition-colors">
+                    </div>
+
+                    <div class="relative z-10 flex-1">
+                        <div
+                            class="w-12 h-12 bg-slate-800 border border-slate-700 shadow-sm rounded-xl flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+                            <i class="ph-fill ph-crown text-2xl text-yellow-500"></i>
+                        </div>
+                        <h2 class="text-2xl font-black text-white mb-3 tracking-tight">Demo VIP / Élite</h2>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                            Control de acceso a nivel enterprise. Incorpora sistema de escaneo de códigos QR,
+                            sincronización en tiempo real para recepcionistas y motor de envíos masivos por WhatsApp.
+                        </p>
+                    </div>
+
+                    <div class="relative z-10 flex items-center justify-between pt-6 border-t border-slate-800">
+                        <span class="text-sm font-bold text-white group-hover:text-yellow-500 transition-colors">Abrir
+                            entorno de prueba</span>
+                        <div
+                            class="w-8 h-8 bg-slate-800 text-white rounded-full flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-slate-900 transition-all">
+                            <i class="ph-bold ph-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function cambiarVista(vista) {
+            const btnBg = document.getElementById('btn-bg');
+            const btnDashboards = document.getElementById('btn-dashboards');
+            const btnInvitaciones = document.getElementById('btn-invitaciones');
+            const secDashboards = document.getElementById('vista-dashboards');
+            const secInvitaciones = document.getElementById('vista-invitaciones');
+            const submenu = document.getElementById('submenu-invitaciones');
+
+            if (vista === 'dashboards') {
+                // Mover switch a la derecha
+                btnBg.style.left = 'calc(50% + 4px)';
+
+                // Estilos de texto del switch
+                btnDashboards.classList.replace('text-slate-500', 'text-white');
+                btnDashboards.classList.remove('hover:text-slate-800');
+
+                btnInvitaciones.classList.replace('text-white', 'text-slate-500');
+                btnInvitaciones.classList.add('hover:text-slate-800');
+
+                // Ocultar submenú de invitaciones
+                submenu.style.opacity = '0';
+                submenu.style.pointerEvents = 'none';
+                submenu.style.transform = 'translateY(-10px)';
+
+                // Transición de vistas
+                secInvitaciones.classList.replace('activo', 'oculto');
+                setTimeout(() => secDashboards.classList.replace('oculto', 'activo'), 300);
+            } else {
+                // Mover switch a la izquierda
+                btnBg.style.left = '4px';
+
+                // Estilos de texto del switch
+                btnInvitaciones.classList.replace('text-slate-500', 'text-white');
+                btnInvitaciones.classList.remove('hover:text-slate-800');
+
+                btnDashboards.classList.replace('text-white', 'text-slate-500');
+                btnDashboards.classList.add('hover:text-slate-800');
+
+                // Mostrar submenú de invitaciones
+                submenu.style.opacity = '1';
+                submenu.style.pointerEvents = 'auto';
+                submenu.style.transform = 'translateY(0)';
+
+                // Transición de vistas
+                secDashboards.classList.replace('activo', 'oculto');
+                setTimeout(() => secInvitaciones.classList.replace('oculto', 'activo'), 300);
+            }
+        }
+
+        function cambiarIframe(url, btnElement) {
+            // Mostrar skeleton
+            document.getElementById('iframe-loader').style.display = 'flex';
+
+            // Cambiar URL
+            const iframe = document.getElementById('iframe-invitacion');
+            iframe.src = url;
+
+            // Resetear todos los botones del submenú
+            const botones = document.querySelectorAll('.submenu-btn');
+            botones.forEach(btn => {
+                btn.className = "submenu-btn px-6 py-2 text-[11px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 rounded-full transition-all";
+            });
+
+            // Activar botón clickeado
+            btnElement.className = "submenu-btn px-6 py-2 text-[11px] font-bold uppercase tracking-widest text-brand bg-white rounded-full shadow-sm transition-all";
+        }
+    </script>
+</body>
+
+</html>
