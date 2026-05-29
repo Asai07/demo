@@ -131,7 +131,7 @@
         </div>
 
         <div id="submenu-invitaciones"
-            class="mt-6 flex flex-wrap justify-center gap-2 md:gap-0 bg-white/60 backdrop-blur-xl border border-white p-1.5 rounded-[2rem] md:rounded-full shadow-sm transition-all duration-300 max-w-full">
+            class="fixed bottom-8 left-0 right-0 mx-auto w-[92%] sm:w-fit z-50 md:relative md:bottom-auto md:mt-6 flex flex-wrap justify-center gap-2 md:gap-0 bg-white/70 backdrop-blur-2xl border border-white/60 p-2 rounded-[2rem] md:rounded-full shadow-2xl transition-opacity duration-300">
             <button onclick="cambiarIframeTab('boda', this)"
                 class="submenu-btn px-4 sm:px-6 py-2 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-brand bg-white rounded-full shadow-sm transition-all">Boda</button>
             <button onclick="cambiarIframeTab('xv', this)"
@@ -144,11 +144,11 @@
         </div>
     </header>
 
-    <main class="flex-1 relative z-10 w-full px-0 md:px-4 py-4 md:py-8 flex flex-col items-center">
+    <main class="flex-1 relative z-10 w-full px-0 md:px-4 py-0 md:py-8 flex flex-col items-center">
 
         <div id="vista-invitaciones" class="seccion activo w-full max-w-6xl mx-auto flex-1 flex flex-col">
             <div
-                class="w-full flex-1 h-[80vh] min-h-[650px] bg-white rounded-none md:rounded-[2rem] iframe-container overflow-hidden relative"
+                class="w-full flex-1 h-[calc(100dvh-100px)] md:h-[80vh] md:min-h-[650px] bg-white rounded-none md:rounded-[2rem] iframe-container overflow-hidden relative"
                 style="-webkit-overflow-scrolling: touch;">
 
                 <div id="iframe-loader" class="absolute inset-0 bg-slate-50 flex items-center justify-center z-20">
@@ -199,7 +199,7 @@
                         <!-- Área de textos -->
                         <div class="w-full md:w-[55%] p-6 sm:p-8 md:p-12 flex flex-col justify-center grow">
                             <h2
-                                class="font-vogue italic font-bold text-5xl sm:text-6xl bg-gradient-to-br from-[#e4573d] to-[#ff9b7d] text-transparent bg-clip-text tracking-tight mb-4 md:mb-5 drop-shadow-[0_2px_2px_rgba(255,255,255,1)]">
+                                class="font-vogue italic font-bold text-5xl sm:text-6xl bg-gradient-to-br from-[#e4573d] to-[#ff9b7d] text-transparent bg-clip-text tracking-tight mb-4 md:mb-5 drop-shadow-[0_2px_4px_rgba(228,87,61,0.6)]">
                                 Demo Premium</h2>
 
                             <p
@@ -246,7 +246,7 @@
                         <!-- Área de textos -->
                         <div class="w-full md:w-[55%] p-6 sm:p-8 md:p-12 flex flex-col justify-center grow">
                             <h2
-                                class="font-vogue italic font-bold text-5xl sm:text-6xl bg-gradient-to-br from-[#e4573d] to-[#ff9b7d] text-transparent bg-clip-text tracking-tight mb-4 md:mb-5 drop-shadow-[0_2px_2px_rgba(255,255,255,1)]">
+                                class="font-vogue italic font-bold text-5xl sm:text-6xl bg-gradient-to-br from-[#e4573d] to-[#ff9b7d] text-transparent bg-clip-text tracking-tight mb-4 md:mb-5 drop-shadow-[0_2px_4px_rgba(228,87,61,0.6)]">
                                 Demo Elite</h2>
 
                             <p
