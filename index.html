@@ -103,9 +103,9 @@
 
     <div class="bg-mesh"></div>
 
-    <header class="relative z-50 flex flex-col items-center pt-8 px-4 w-full">
+    <header class="fixed top-0 left-0 right-0 z-50 flex flex-col items-center pt-4 md:pt-8 px-4 w-full md:relative md:top-auto">
         <div
-            class="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between p-2 md:pr-4 bg-white/60 backdrop-blur-2xl border border-white rounded-[2rem] md:rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] gap-4 md:gap-0">
+            class="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between p-2 md:pr-4 bg-white/70 backdrop-blur-2xl border border-white/60 rounded-[2rem] md:rounded-full shadow-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.04)] gap-4 md:gap-0">
 
             <div class="md:pl-6 w-full md:w-32 flex justify-center md:justify-start">
                 <img src="logomievento.png" alt="Eventoclic Logo" class="h-5 object-contain">
@@ -148,7 +148,7 @@
 
         <div id="vista-invitaciones" class="seccion activo w-full max-w-6xl mx-auto flex-1 flex flex-col">
             <div
-                class="w-full flex-1 h-[calc(100dvh-100px)] md:h-[80vh] md:min-h-[650px] bg-white rounded-none md:rounded-[2rem] iframe-container overflow-hidden relative"
+                class="w-full flex-1 h-[100dvh] md:h-[80vh] md:min-h-[650px] bg-white rounded-none md:rounded-[2rem] iframe-container overflow-hidden relative"
                 style="-webkit-overflow-scrolling: touch;">
 
                 <div id="iframe-loader" class="absolute inset-0 bg-slate-50 flex items-center justify-center z-20">
@@ -173,7 +173,7 @@
             </div>
         </div>
 
-        <div id="vista-dashboards" class="seccion oculto w-full max-w-5xl mx-auto px-4 md:px-0" style="display: none;">
+        <div id="vista-dashboards" class="seccion oculto w-full max-w-5xl mx-auto px-4 md:px-0 pt-[140px] md:pt-0" style="display: none;">
             <div class="flex flex-col gap-6 md:gap-10 w-full">
 
                 <!-- CARD DEMO PREMIUM -->
